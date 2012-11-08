@@ -11,7 +11,7 @@ With the hope of bigger Talend Open Source contributions I have put this project
 
 Deploying the component
 =======================
-You can use any of the components without using git at all. Just download the project using https://github.com/nestoru/talend-custom-components/downloads and then deploy it following the steps at http://thinkinginsoftware.blogspot.com/2012/10/install-custom-talend-component.html )
+You can use any of the components without using git at all. Just download the project using https://github.com/nestoru/talend-custom-components/downloads and then deploy the specific component directory following the steps at http://thinkinginsoftware.blogspot.com/2012/10/install-custom-talend-component.html )
 
 Getting started
 ===============
