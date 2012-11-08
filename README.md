@@ -35,7 +35,7 @@ Customizing the scaffold files
  * HEADER[@AUTHOR, @RELEASE_DATE, @VERSION]
  * HEADER[@STARTABLE]: For Startable we use true since our component will need no input from any other component
  * FAMILY: to define a path for your component (File/Input in our case). Talend will list your component below the directory structure you define here
- * CONNECTORS: to reflect how your component will work. In our case we use FLOW, and MAX_INPUT="1" (default generated values)</li>
+ * CONNECTORS: to reflect how your component will work. In our case we use FLOW, and MAX_INPUT="1" (default generated values) but we also use SUBJOB_OK, SUBJOB_ERROR, COMPONENT_OK, COMPONENT_ERROR and RUN_IF connectors</li>
  * PARAMETERS: to define your custom settings. In our case we need INPUT_FILE, DELIMITER, LOOKUP_COLUMN, LOOKUP_VALUE all type TEXT. Note from the resulting project how we add the DEFAULT node for each of them
 Side Note: Using the official eclipse distribution (not the Talend eclipse distribution) you could generate the component XML out of Component.xsd (the file is located inside the Talend distribution folder so just use find command) from "Navigator" view using "Generate|XML". This could be useful in case you are generating quick prototypes out of the component perspective (namely scaffolds from command line ;-)
 1. Add labels in *_message.properties file for parameters (For example INPUT_FILE.NAME=INPUT_FILE)
