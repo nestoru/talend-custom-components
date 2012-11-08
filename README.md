@@ -9,6 +9,10 @@ For the complete use case you can read  http://thinkinginsoftware.blogspot.com/2
 
 With the hope of bigger Talend Open Source contributions I have put this project available to the community here at github. There are a lot of open requests and features even for existing talend components so you could fork this project and show Talend community your fixes or additions to the current code base. I believe Talend team should use github just as Oracle has done with Java and VMWare has done with Spring Framework.
 
+Deploying the component
+=======================
+You can use any of the components without using git at all. Just download the project using https://github.com/nestoru/talend-custom-components/downloads and then deploy it following the steps at http://thinkinginsoftware.blogspot.com/2012/10/install-custom-talend-component.html )
+
 Getting started
 ===============
 1. Create a directory for your custom components, for example /opt/talend-custom-components
@@ -161,9 +165,6 @@ If you are old enough to know how difficult was to debug JSP in its beginning wh
 1. Debugging compilation problems is difficult. Many times the error simply just says there is an error, period. So be careful on validating the XML against the XSD. Be also careful about where to put your code, remember shared across templates code goes outside the scriptlet tags and variables must use the cid variable.
 2. Switch from "Designer" to "Code" in the job which includes the component and inspect error messages inside (they are marked in red as usual in the Eclipse environment). 
 
-Deploying the component
-=======================
-I have written steps to deploy a custom talend component before ( http://thinkinginsoftware.blogspot.com/2012/10/install-custom-talend-component.html )
 
 FAQ
 ===
