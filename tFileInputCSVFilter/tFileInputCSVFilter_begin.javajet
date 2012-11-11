@@ -55,6 +55,19 @@ if(headerRowNumber<%=cid %> > 0) {
 
 csvReader<%=cid %>.setDelimiter(<%=delimiter %>.charAt(0));
 csvReader<%=cid %>.readHeaders();
+
+char textQualifier<%=cid %> = csvReader<%=cid %>.getTextQualifier();
+String[] headers<%=cid %> = csvReader<%=cid %>.getHeaders();
+StringBuffer sb<%=cid %> = new StringBuffer();
+for(int i<%=cid %> = 0; i<%=cid %> < headers<%=cid %>.length; i<%=cid %>++ ) {
+  String header<%=cid %> = headers<%=cid %>[i<%=cid %>];
+  sb<%=cid %>.append(textQualifier<%=cid %> + header<%=cid %> + textQualifier<%=cid %>);
+  if( i<%=cid %> != headers<%=cid %>.length - 1 ) {
+    sb<%=cid %>.append(<%=delimiter %>);
+  }
+}
+
+
 int nb_line_<%=cid %> = 0;
 int nb_line_ok_<%=cid %> = 0;
 int nb_line_reject_<%=cid %> = 0;
