@@ -13,12 +13,20 @@
     	java.util.Map		
 	" 
 %>
-<% 
-    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
-    INode node = (INode)codeGenArgument.getArgument();
-    String cid = node.getUniqueName();	
-    
-     
-%>
+<%CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+INode node = (INode)codeGenArgument.getArgument();
+String cid = node.getUniqueName();	
+List<IMetadataTable> metadatas = node.getMetadataList();
+
+if (metadatas != null && metadatas.size() > 0) {
+  IMetadataTable metadata = metadatas.get(0);
+  
+  if (metadata != null) {%>
+    globalMap.put("<%=cid %>_NB_LINE", nb_line_<%=cid%>);
+    globalMap.put("<%=cid %>_NB_LINE_OK", nb_line_ok_<%=cid%>);
+    globalMap.put("<%=cid %>_NB_LINE_REJECT", nb_line_reject_<%=cid%>);
+  <%}
+}%>
+
 }
 csvReader<%=cid %>.close();

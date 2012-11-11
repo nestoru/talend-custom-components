@@ -5,6 +5,7 @@
 		org.talend.core.model.metadata.IMetadataTable 
 		org.talend.core.model.metadata.IMetadataColumn 
 		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.EConnectionType
 		org.talend.core.model.process.IConnectionCategory
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		org.talend.core.model.metadata.types.JavaTypesManager
@@ -13,15 +14,80 @@
     	java.util.Map		
 	" 
 %>
-<% 
-    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
-    INode node = (INode)codeGenArgument.getArgument();
-    String cid = node.getUniqueName();	
-%>    
-String value<%=cid %> = csvReader<%=cid %>.get(lookupColumn<%=cid %>);
-if(value<%=cid %>.equals(lookupValue<%=cid %>)) {
-  System.out.println(csvReader<%=cid %>.getRawRecord());
+    
+<%CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+INode node = (INode)codeGenArgument.getArgument();
+String cid = node.getUniqueName();
+
+List<? extends IConnection> conns = node.getOutgoingSortedConnections();
+List<? extends IConnection> connsFilter = node.getOutgoingConnections("FILTER");
+List<? extends IConnection> connsReject = node.getOutgoingConnections("REJECT");
+
+/*if (conns!=null) {
+  if (conns.size()>0) {
+    for (int i=0;i<conns.size();i++) {
+      IConnection conn = conns.get(i);
+      if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {%>
+        <%=conn.getName() %> = null;			
+      <%}
+    }
+  }
+}*/
+
+
+for ( IConnection conn : conns  ) { %>
+  <%= conn.getName() %> = null;
+<% }
+
+
+List<IMetadataColumn> columns = null;
+List<IMetadataTable> metadatas = node.getMetadataList();
+if ((metadatas != null) && (metadatas.size() > 0)) {
+  IMetadataTable metadata = metadatas.get(0);
+  if (metadata != null) {
+    columns = metadata.getListColumns();	
+  }
 }
+
+%>
+String value<%=cid %> = csvReader<%=cid %>.get(lookupColumn<%=cid %>);
+//if(value<%=cid %>.equals(lookupValue<%=cid %>)) {
+//  System.out.println(csvReader<%=cid %>.getRawRecord());
+//}
+
+if(value<%=cid %>.equals(lookupValue<%=cid %>)) {
+  //System.out.println("connFilter Found");
+  <%for (IConnection connFilter : connsFilter) {%>
+      
+	  if(<%=connFilter.getName() %> == null){ 
+	    //System.out.println("connFilter.getName() is null");
+	    <%=connFilter.getName() %> = new <%=connFilter.getName() %>Struct();
+	  }<%
+	  if (connFilter.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {	    
+	    for(IMetadataColumn column : columns) {%>
+	        <%=connFilter.getName() %>.<%=column.getLabel()%> = csvReader<%=cid %>.getRawRecord();
+	    <%}
+	  }
+  }%>
+  nb_line_ok_<%=cid%>++;
+} else {
+  //System.out.println("connFilter NotFound");
+  <%for (IConnection connReject : connsReject) {%>
+          if(<%=connReject.getName() %> == null){ 
+	        <%=connReject.getName() %> = new <%=connReject.getName() %>Struct();
+	      }<%
+          if (connReject.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+            for(IMetadataColumn columnReject : columns) {%>
+              <%=connReject.getName() %>.<%=columnReject.getLabel()%> = csvReader<%=cid %>.getRawRecord();
+            <%}
+          }
+  }%> 
+  nb_line_reject_<%=cid%>++;
+}
+
+nb_line_<%=cid%>++;
+
+
 
 
 
