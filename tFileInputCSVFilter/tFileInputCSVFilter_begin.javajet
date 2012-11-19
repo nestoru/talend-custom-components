@@ -35,10 +35,10 @@ String lookupColumn<%=cid %> = <%=lookupColumn %>;
 int headerRowNumber<%=cid %> = <%=headerRowNumber %>;
 
 com.csvreader.CsvReader csvReader<%=cid %> = null;
-
-if(headerRowNumber<%=cid %> > 0) {
-  java.io.BufferedReader reader<%=cid %> = new java.io.BufferedReader(new java.io.FileReader(<%=inputFile %>));
-  java.io.ByteArrayOutputStream out<%=cid %> = new java.io.ByteArrayOutputStream();
+java.io.ByteArrayOutputStream out<%=cid %> = new java.io.ByteArrayOutputStream();
+java.io.BufferedReader reader<%=cid %> = new java.io.BufferedReader(new java.io.FileReader(<%=inputFile %>));
+  
+if(headerRowNumber<%=cid %> > 0) { 
   int rowNumber<%=cid %> = 0;
   String line<%=cid %> = null;
   while ((line<%=cid %> = reader<%=cid %>.readLine()) != null) {
@@ -66,12 +66,11 @@ for(int i<%=cid %> = 0; i<%=cid %> < headers<%=cid %>.length; i<%=cid %>++ ) {
     sb<%=cid %>.append(<%=delimiter %>);
   }
 }
-
-
+  
 int nb_line_<%=cid %> = 0;
 int nb_line_ok_<%=cid %> = 0;
 int nb_line_reject_<%=cid %> = 0;
 
-while (csvReader<%=cid %>.readRecord()) {
+while (csvReader<%=cid %>.readRecord()) { //Begin of Main Loop
 
 

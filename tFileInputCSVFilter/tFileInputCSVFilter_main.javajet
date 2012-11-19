@@ -39,6 +39,7 @@ if ((metadatas != null) && (metadatas.size() > 0)) {
 %>
 String value<%=cid %> = csvReader<%=cid %>.get(lookupColumn<%=cid %>);
 
+
 if(value<%=cid %>.equals(lookupValue<%=cid %>)) {
   <%for (IConnection connFilter : connsFilter) {%>
     if(<%=connFilter.getName() %> == null){ 
@@ -46,7 +47,7 @@ if(value<%=cid %>.equals(lookupValue<%=cid %>)) {
 	}<%
 	if (connFilter.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {	    
 	  for(IMetadataColumn column : columns) {%>
-	    if( nb_line_ok_<%=cid %> == 0 ) {
+	    if( nb_line_ok_<%=cid %> == 0 && nb_line_<%=cid%> == 0 ) {
           <%=connFilter.getName() %>.<%=column.getLabel()%> = sb<%=cid %>.toString() + "\n" + csvReader<%=cid %>.getRawRecord();
         } else {
 	      <%=connFilter.getName() %>.<%=column.getLabel()%> = csvReader<%=cid %>.getRawRecord();
@@ -62,7 +63,7 @@ if(value<%=cid %>.equals(lookupValue<%=cid %>)) {
 	}<%
     if (connReject.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
       for(IMetadataColumn columnReject : columns) {%>
-        if(nb_line_reject_<%=cid%> == 0 ) {
+        if(nb_line_reject_<%=cid%> == 0 && nb_line_<%=cid%> == 0 ) {
           <%=connReject.getName() %>.<%=columnReject.getLabel()%> = sb<%=cid %>.toString() + "\n" + csvReader<%=cid %>.getRawRecord();
         } else {
           <%=connReject.getName() %>.<%=columnReject.getLabel()%> = csvReader<%=cid %>.getRawRecord();
@@ -73,9 +74,32 @@ if(value<%=cid %>.equals(lookupValue<%=cid %>)) {
   nb_line_reject_<%=cid%>++;
 }
 
-nb_line_<%=cid%>++;
+//Add headers if first line data to filter or reject
+if( nb_line_ok_<%=cid %> == 0 && nb_line_<%=cid%> == 0 ) {
+  <%for (IConnection connFilter : connsFilter) {%>
+    if(<%=connFilter.getName() %> == null){ 
+	  <%=connFilter.getName() %> = new <%=connFilter.getName() %>Struct();
+	}<%
+	if (connFilter.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {	    
+	  for(IMetadataColumn column : columns) {%>
+	    <%=connFilter.getName() %>.<%=column.getLabel()%> = sb<%=cid %>.toString();
+	  <%}
+	}
+  }%>
+}
 
+if( nb_line_reject_<%=cid %> == 0 && nb_line_<%=cid%> == 0 ) {
+  <%for (IConnection connReject : connsReject) {%>
+    if(<%=connReject.getName() %> == null){ 
+	  <%=connReject.getName() %> = new <%=connReject.getName() %>Struct();
+	}<%
+    if (connReject.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+      for(IMetadataColumn columnReject : columns) {%>
+        <%=connReject.getName() %>.<%=columnReject.getLabel()%> = sb<%=cid %>.toString();
+      <%}
+    }
+  }%> 
+}
 
-
-
+nb_line_<%=cid%>++
 
