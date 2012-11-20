@@ -28,7 +28,7 @@
 	String inputFile = ElementParameterParser.getValue(node, "__INPUT_FILE__");
 	String lookupValue = ElementParameterParser.getValue(node, "__LOOKUP_VALUE__");
 	String lookupColumn = ElementParameterParser.getValue(node, "__LOOKUP_COLUMN__");
-	Integer headerRowNumber = Integer.parseInt(ElementParameterParser.getValue(node, "__HEADER_ROW_NUMBER__"));
+	Object headerRowNumber = ElementParameterParser.getObjectValue(node, "__HEADER_ROW_NUMBER__");
 %>
 String lookupValue<%=cid %> = <%=lookupValue %>;
 String lookupColumn<%=cid %> = <%=lookupColumn %>;

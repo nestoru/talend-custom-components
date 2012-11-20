@@ -101,5 +101,4 @@ if( nb_line_reject_<%=cid %> == 0 && nb_line_<%=cid%> == 0 ) {
   }%> 
 }
 
-nb_line_<%=cid%>++
-
+nb_line_<%=cid%>++;
