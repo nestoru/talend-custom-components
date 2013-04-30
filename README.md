@@ -11,7 +11,12 @@ With the hope of bigger Talend Open Source contributions I have put this project
 
 Deploying the component
 =======================
-You can use any of the components without using git at all. Just download the project using https://github.com/nestoru/talend-custom-components/downloads and then deploy the specific component directory following the steps at http://thinkinginsoftware.blogspot.com/2012/10/install-custom-talend-component.html )
+1. cd /tmp
+1. git clone https://github.com/nestoru/talend-custom-components.git
+1. cp -R /tmp/talend-custom-components/tFileInputCSVFilter $TALEND_HOME/plugins/org.talend.designer.components.localprovider_*/components/
+1. restart talend or press ctrl+shift+F3
+ 
+Alternatively you could use any of the components without using git at all. Just download the project using https://github.com/nestoru/talend-custom-components/downloads and then deploy the specific component directory following the steps at http://thinkinginsoftware.blogspot.com/2012/10/install-custom-talend-component.html )
 
 Getting started
 ===============
