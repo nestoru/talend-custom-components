@@ -68,7 +68,7 @@ if( nb_line_<%=cid%> == 0 ) {
 	value<%=cid %> = csvReader<%=cid %>.get(lookupColumn<%=cid %>);
 	
 	
-	if(value<%=cid %>.equals(lookupValue<%=cid %>)) {
+	if(value<%=cid %>.trim().equals(lookupValue<%=cid %>.trim())) {
 	  <%for (IConnection connFilter : connsFilter) {%>
 	    if(<%=connFilter.getName() %> == null){ 
 		  <%=connFilter.getName() %> = new <%=connFilter.getName() %>Struct();
